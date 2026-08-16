@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    background-color: #000000;
+    color: #ffffff;
+  }
+  
+  h1, h2, h3, h4, .font-heading {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    letter-spacing: -0.03em;
+  }
+}
+
+/* Custom scrollbar matching Bold Typography theme */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(163, 230, 53, 0.2);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #a3e635;
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, #a3e635 0%, #4ade80 50%, #ffffff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-lime {
+  background: linear-gradient(135deg, #a3e635 0%, #a3e635 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.bg-radial-glow {
+  background: radial-gradient(circle at 50% 0%, rgba(163, 230, 53, 0.12) 0%, rgba(0, 0, 0, 0) 70%);
+}
+
