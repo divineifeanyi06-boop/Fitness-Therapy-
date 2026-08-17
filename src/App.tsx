@@ -3,10 +3,13 @@ import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { About } from './components/About';
 import { Specializations } from './components/Specializations';
+import { FitnessCalculator } from './components/FitnessCalculator';
 import { ProgramDetails } from './components/ProgramDetails';
+import { PaymentSection } from './components/PaymentSection';
 import { Testimonials } from './components/Testimonials';
 import { RegistrationForm } from './components/RegistrationForm';
 import { SuccessModal } from './components/SuccessModal';
+import { LivePaymentNotification } from './components/LivePaymentNotification';
 import { Footer } from './components/Footer';
 import { RegistrationFormData } from './types';
 import { DEFAULT_GOOGLE_SHEET_URL } from './data/fitnessData';
@@ -33,6 +36,10 @@ export default function App() {
     );
   };
 
+  const handleSelectRecommendedActivities = (activities: string[]) => {
+    setSelectedActivities(activities);
+  };
+
   const handleFormSubmitSuccess = (data: RegistrationFormData) => {
     setSubmittedData(data);
     setIsSuccessModalOpen(true);
@@ -57,13 +64,21 @@ export default function App() {
           onToggleActivity={handleToggleActivity}
         />
 
-        {/* 4. Program Details Section (5 Months, ₦50,000) */}
+        {/* 4. Automated Fitness Assessment & Body Diagnostic Tool */}
+        <FitnessCalculator
+          onSelectRecommendedActivities={handleSelectRecommendedActivities}
+        />
+
+        {/* 5. Program Details Section (5 Months, ₦50,000) */}
         <ProgramDetails />
 
-        {/* 5. Testimonials Section */}
+        {/* 6. Bank Transfer & Payment Section */}
+        <PaymentSection />
+
+        {/* 7. Testimonials Section */}
         <Testimonials />
 
-        {/* 6. Registration Form Section ("Reserve Your Spot") */}
+        {/* 8. Registration Form Section ("Reserve Your Spot") */}
         <RegistrationForm
           selectedActivities={selectedActivities}
           onToggleActivity={handleToggleActivity}
@@ -74,6 +89,9 @@ export default function App() {
 
       {/* Footer */}
       <Footer />
+
+      {/* Real-time Nigerian Payment & Enrollment Toast (Every 60 Seconds) */}
+      <LivePaymentNotification />
 
       {/* Success Redirect Modal */}
       <SuccessModal

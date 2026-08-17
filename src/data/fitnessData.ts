@@ -18,6 +18,15 @@ export const BUSINESS_INFO = {
   currencySymbol: "₦",
 };
 
+export const PAYMENT_INFO = {
+  bankName: "PalmPay",
+  accountNumber: "9069710687",
+  accountName: "Chukwudebe Ifeanyi",
+  programFee: "₦50,000",
+  duration: "5 Months",
+  note: "Transfer can be made before or after registration. Forward proof of payment via WhatsApp for instant slot activation.",
+};
+
 export const SPECIALIZATIONS: Specialization[] = [
   {
     id: "strength-training",

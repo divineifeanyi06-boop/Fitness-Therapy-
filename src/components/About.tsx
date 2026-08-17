@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Check, Shield, Target, Users, HeartPulse, Award } from 'lucide-react';
 import { BUSINESS_INFO } from '../data/fitnessData';
+import coachImg from '../assets/images/coach_ifeanyi_1786358379064.jpg';
+
+const FALLBACK_COACH = 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=1000&q=80';
 
 export const About: React.FC = () => {
+  const [imgSrc, setImgSrc] = useState(coachImg);
   const corePillars = [
     {
       title: 'Individualized Fitness Therapy',
@@ -50,7 +54,8 @@ export const About: React.FC = () => {
           <div className="lg:col-span-5 relative">
             <div className="relative mx-auto max-w-md rounded-3xl overflow-hidden border-2 border-white/15 shadow-2xl group bg-zinc-900">
               <img
-                src="/src/assets/images/coach_ifeanyi_1786358379064.jpg"
+                src={imgSrc}
+                onError={() => setImgSrc(FALLBACK_COACH)}
                 alt="Coach Ifeanyi - Founder & Athletic Fitness Therapist"
                 referrerPolicy="no-referrer"
                 className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500 filter contrast-125 grayscale"

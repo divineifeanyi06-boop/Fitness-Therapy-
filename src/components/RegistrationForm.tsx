@@ -267,42 +267,79 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({
 
             </div>
 
-            {/* Preferred Fitness Activities Checkboxes */}
+            {/* Preferred Fitness Activities Multi-Selection */}
             <div className="space-y-3 pt-2">
-              <label className="text-xs font-black text-white uppercase tracking-wider block">
-                Preferred Fitness Activities <span className="text-lime-400">* (Select at least one)</span>
-              </label>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <label className="text-xs font-black text-white uppercase tracking-wider block">
+                  Preferred Fitness Activities <span className="text-lime-400">* (Select as many as you want)</span>
+                </label>
+                
+                {/* Select All & Clear All Quick Helpers */}
+                <div className="flex items-center gap-2 text-xs">
+                  <span className="text-[11px] font-bold text-lime-400 bg-zinc-800 border border-lime-400/30 px-2.5 py-0.5 rounded-full">
+                    {formData.preferredActivities.length} of {SPECIALIZATIONS.length} Selected
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const allTitles = SPECIALIZATIONS.map((s) => s.title);
+                      setFormData((prev) => ({ ...prev, preferredActivities: allTitles }));
+                      allTitles.forEach((t) => {
+                        if (!selectedActivities.includes(t)) onToggleActivity(t);
+                      });
+                    }}
+                    className="text-[11px] font-bold text-white/70 hover:text-lime-400 underline transition-colors"
+                  >
+                    Select All 8
+                  </button>
+                  <span className="text-white/30">•</span>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setFormData((prev) => ({ ...prev, preferredActivities: [] }));
+                      selectedActivities.forEach((t) => onToggleActivity(t));
+                    }}
+                    className="text-[11px] font-bold text-white/50 hover:text-red-400 underline transition-colors"
+                  >
+                    Clear
+                  </button>
+                </div>
+              </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                 {SPECIALIZATIONS.map((spec) => {
                   const isChecked = formData.preferredActivities.includes(spec.title);
                   return (
-                    <label
+                    <button
                       key={spec.id}
-                      onClick={() => onToggleActivity(spec.title)}
-                      className={`p-3 rounded-xl border text-xs cursor-pointer flex items-center justify-between transition-all ${
+                      type="button"
+                      onClick={() => {
+                        const newActivities = isChecked
+                          ? formData.preferredActivities.filter((item) => item !== spec.title)
+                          : [...formData.preferredActivities, spec.title];
+                        setFormData((prev) => ({ ...prev, preferredActivities: newActivities }));
+                        onToggleActivity(spec.title);
+                        if (errors.preferredActivities) {
+                          setErrors((prev) => ({ ...prev, preferredActivities: undefined }));
+                        }
+                      }}
+                      className={`p-3.5 rounded-xl border text-xs cursor-pointer flex items-center justify-between text-left transition-all ${
                         isChecked
-                          ? 'bg-black border-lime-400 text-lime-400 font-black'
-                          : 'bg-black border-white/10 text-white/70 hover:border-white/30'
+                          ? 'bg-zinc-950 border-lime-400 text-lime-400 font-black shadow-md shadow-lime-400/10'
+                          : 'bg-black border-white/15 text-white/75 hover:border-white/40 hover:text-white'
                       }`}
                     >
-                      <span className="truncate pr-2 uppercase">{spec.title}</span>
-                      <input
-                        type="checkbox"
-                        checked={isChecked}
-                        onChange={() => {}}
-                        className="hidden"
-                      />
+                      <span className="truncate pr-2 uppercase font-bold">{spec.title}</span>
                       <span
-                        className={`w-4 h-4 rounded border flex items-center justify-center shrink-0 ${
+                        className={`w-4 h-4 rounded border flex items-center justify-center shrink-0 transition-colors ${
                           isChecked
                             ? 'bg-lime-400 border-lime-400 text-black'
-                            : 'border-white/20 bg-zinc-900'
+                            : 'border-white/30 bg-zinc-900'
                         }`}
                       >
-                        {isChecked && <CheckCircle2 className="w-3.5 h-3.5 font-bold" />}
+                        {isChecked && <CheckCircle2 className="w-3.5 h-3.5 stroke-[3]" />}
                       </span>
-                    </label>
+                    </button>
                   );
                 })}
               </div>
@@ -365,8 +402,23 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({
               )}
             </div>
 
+            {/* Suggested Tuition Transfer Box */}
+            <div className="p-4 rounded-2xl bg-black border border-lime-400/30 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+              <div className="space-y-0.5">
+                <span className="text-[10px] font-black uppercase tracking-wider text-lime-400 block">
+                  Tuition Transfer Details (Suggested)
+                </span>
+                <p className="text-white/80 font-medium">
+                  <strong>PalmPay:</strong> <span className="font-mono text-lime-300 font-bold">9069710687</span> (Chukwudebe Ifeanyi) • <strong>₦50,000</strong>
+                </p>
+              </div>
+              <span className="text-[11px] text-white/50 font-medium shrink-0">
+                *Proof can be sent via WhatsApp after submission.
+              </span>
+            </div>
+
             {/* Submit Button */}
-            <div className="pt-4 space-y-3">
+            <div className="pt-2 space-y-3">
               <button
                 type="submit"
                 disabled={isSubmitting}

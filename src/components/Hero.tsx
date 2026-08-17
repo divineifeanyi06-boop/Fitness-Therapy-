@@ -1,14 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ShieldCheck, ArrowRight, CheckCircle2, Flame, Award, Calendar, Sparkles } from 'lucide-react';
 import { BUSINESS_INFO } from '../data/fitnessData';
+import heroImg from '../assets/images/fitness_hero_1786358364833.jpg';
+
+const FALLBACK_HERO = 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1600&q=80';
 
 export const Hero: React.FC = () => {
+  const [imgSrc, setImgSrc] = useState(heroImg);
+
   return (
     <section id="home" className="relative min-h-screen pt-28 pb-16 lg:pt-36 lg:pb-24 flex items-center overflow-hidden bg-black">
       {/* Background Hero Image with Dark Gradient Overlays */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <img
-          src="/src/assets/images/fitness_hero_1786358364833.jpg"
+          src={imgSrc}
+          onError={() => setImgSrc(FALLBACK_HERO)}
           alt="Ifeanyi's Fitness Therapy Training Facility"
           referrerPolicy="no-referrer"
           className="w-full h-full object-cover object-center scale-105 opacity-25 filter contrast-150 brightness-75 grayscale"
